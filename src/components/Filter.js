@@ -1,9 +1,9 @@
 import { useState } from 'react';
-const Filter = ({ changeSelectedFunction }) => {
+const Filter = ({ onChange }) => {
   const [optionsState, setOptionsState] = useState('');
   const changeEventHandler = (newValue) => {
     setOptionsState(newValue);
-    changeSelectedFunction(newValue);
+    onChange(newValue);
   };
 
   return (

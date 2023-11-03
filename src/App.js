@@ -24,7 +24,7 @@ const App = () => {
         </div>
         <div className="col-12 col-sm-6 col-md-4">
           <Filter
-            changeSelectedFunction={(selected) => {
+            onChange={(selected) => {
               setSelectedType(selected);
             }}
           />
