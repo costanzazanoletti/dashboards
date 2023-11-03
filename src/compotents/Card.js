@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Star from './Star';
 import Toggle from './Toggle';
+import DashboardItemIcon from './DashboardItemIcon';
+import DashboardItem from './DashboardItem';
 import { getDashboardDetail } from '../api';
 
 const Card = ({ item, expanded, clickFunction }) => {
@@ -22,9 +24,16 @@ const Card = ({ item, expanded, clickFunction }) => {
           </div>
         </div>
         {expanded && (
-          <div>
+          <div className="list-group">
             {dashboardItems.map((item) => {
-              return <p key={item.id}>{item.type}</p>;
+              return (
+                <div
+                  className="list-group-item d-flex align-items-center justify-content-between"
+                  key={item.id}
+                >
+                  <DashboardItem item={item} />
+                </div>
+              );
             })}
           </div>
         )}
