@@ -17,7 +17,7 @@ const CardList = ({ items, selectedType }) => {
               item={item}
               expanded={index === expandedIndex}
               selectedType={selectedType}
-              clickFunction={() => {
+              onClick={() => {
                 setExpandedIndex(index);
               }}
             />
