@@ -8,6 +8,6 @@ export const getDashboardList = async () => {
 };
 
 export const getDashboardDetail = async (id) => {
-  const response = await fetch(BASE_URL + id + '.json');
-  return await response.json();
+  const response = await axios.get(BASE_URL + id + '.json');
+  return response.data.dashboardItems;
 };
