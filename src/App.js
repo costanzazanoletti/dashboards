@@ -1,9 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getDashboardList } from './api';
-import CardList from './compotents/CardList';
+import CardList from './components/CardList';
+import Filter from './components/Filter';
 
 const App = () => {
   const [items, setItems] = useState([]);
+  const [selectedType, setSelectedType] = useState('');
 
   const updateList = useCallback(async () => {
     const data = await getDashboardList();
@@ -16,9 +18,20 @@ const App = () => {
 
   return (
     <div className="container">
-      <h1>Dashboards</h1>
-      <hr />
-      <CardList items={items} />
+      <header className="row align-items-center">
+        <div className="col-12 col-sm-6 col-md-8">
+          <div className="fs-2">Dashboards</div>
+        </div>
+        <div className="col-12 col-sm-6 col-md-4">
+          <Filter
+            changeSelectedFunction={(selected) => {
+              setSelectedType(selected);
+            }}
+          />
+        </div>
+        <hr />
+      </header>
+      <CardList items={items} selectedType={selectedType} />
     </div>
   );
 };

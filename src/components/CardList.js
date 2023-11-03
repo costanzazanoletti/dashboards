@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Card from './Card';
 
-const CardList = ({ items }) => {
+const CardList = ({ items, selectedType }) => {
   const [expandedIndex, setExpandedIndex] = useState(0);
 
   if (items.length === 0) {
@@ -16,6 +16,7 @@ const CardList = ({ items }) => {
             <Card
               item={item}
               expanded={index === expandedIndex}
+              selectedType={selectedType}
               clickFunction={() => {
                 setExpandedIndex(index);
               }}

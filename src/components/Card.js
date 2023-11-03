@@ -5,8 +5,9 @@ import DashboardItemIcon from './DashboardItemIcon';
 import DashboardItem from './DashboardItem';
 import { getDashboardDetail } from '../api';
 
-const Card = ({ item, expanded, clickFunction }) => {
+const Card = ({ item, expanded, clickFunction, selectedType }) => {
   const [dashboardItems, setDashboardItems] = useState([]);
+
   const clickEventHandler = async () => {
     clickFunction();
     const data = await getDashboardDetail(item.id);
@@ -26,14 +27,16 @@ const Card = ({ item, expanded, clickFunction }) => {
         {expanded && (
           <div className="list-group">
             {dashboardItems.map((item) => {
-              return (
-                <div
-                  className="list-group-item d-flex align-items-center justify-content-between"
-                  key={item.id}
-                >
-                  <DashboardItem item={item} />
-                </div>
-              );
+              if (selectedType === '' || selectedType === item.type) {
+                return (
+                  <div
+                    className="list-group-item d-flex align-items-center justify-content-between"
+                    key={item.id}
+                  >
+                    <DashboardItem item={item} />
+                  </div>
+                );
+              }
             })}
           </div>
         )}
