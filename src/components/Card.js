@@ -9,9 +9,11 @@ const Card = ({ item, expanded, clickFunction, selectedType }) => {
   const [dashboardItems, setDashboardItems] = useState([]);
 
   const clickEventHandler = async () => {
-    clickFunction();
-    const data = await getDashboardDetail(item.id);
-    setDashboardItems(data);
+    if (!expanded) {
+      clickFunction();
+      const data = await getDashboardDetail(item.id);
+      setDashboardItems(data);
+    }
   };
 
   return (
