@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect, useCallback } from 'react';
+import { getDashboardList } from './api';
+import CardList from './compotents/CardList';
 
-function App() {
+const App = () => {
+  const [items, setItems] = useState([]);
+
+  const updateList = useCallback(async () => {
+    const data = await getDashboardList();
+    setItems(data);
+  }, []);
+
+  useEffect(() => {
+    updateList();
+  }, [updateList]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <h1>Dashboards</h1>
+      <hr />
+      <CardList items={items} />
     </div>
   );
-}
+};
 
 export default App;
