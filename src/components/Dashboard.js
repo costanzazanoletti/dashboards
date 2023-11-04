@@ -4,7 +4,7 @@ import Toggle from './Toggle';
 import DashboardItemsList from './DashboardItemsList';
 import { getDashboardDetail } from '../api';
 
-const Card = ({ item, expanded, handleClick, selectedType }) => {
+const Dashboard = ({ item, expanded, handleClick, selectedType }) => {
   const [dashboardItems, setDashboardItems] = useState([]);
 
   const updateDashboardItems = useCallback(async () => {
@@ -44,4 +44,4 @@ const Card = ({ item, expanded, handleClick, selectedType }) => {
   );
 };
 
-export default Card;
+export default Dashboard;

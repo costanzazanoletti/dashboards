@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import Card from './Card';
+import Dashboard from './Dashboard';
 import { getDashboardList } from '../api';
 
-const CardList = ({ selectedType }) => {
+const DashboardList = ({ selectedType }) => {
   const [items, setItems] = useState([]);
   const [expandedIndex, setExpandedIndex] = useState(0);
 
@@ -22,7 +22,7 @@ const CardList = ({ selectedType }) => {
       {items.map((item, index) => {
         return (
           <li className="py-2" key={item.id}>
-            <Card
+            <Dashboard
               item={item}
               expanded={index === expandedIndex}
               selectedType={selectedType}
@@ -37,4 +37,4 @@ const CardList = ({ selectedType }) => {
   );
 };
 
-export default CardList;
+export default DashboardList;

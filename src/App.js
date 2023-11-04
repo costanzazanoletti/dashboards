@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import CardList from './components/CardList';
+import DashboardList from './components/DashboardList';
 import Filter from './components/Filter';
 
 export const TypeContext = React.createContext();
@@ -21,7 +21,7 @@ const App = () => {
         </div>
         <hr />
       </header>
-      <CardList selectedType={selectedType} />
+      <DashboardList selectedType={selectedType} />
     </div>
   );
 };
