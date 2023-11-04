@@ -8,6 +8,7 @@ const Filter = () => {
     <div className="input-group">
       <div className="input-group-text">Filter items</div>
       <select
+        data-testid="type-filter"
         className="form-select"
         onChange={(e) => {
           type.setSelectedType(e.target.value);

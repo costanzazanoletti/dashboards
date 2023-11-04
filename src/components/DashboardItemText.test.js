@@ -4,7 +4,7 @@ import DashboardItemText from './DashboardItemText';
 
 const { dashboardItems } = require('../testData');
 
-describe(DashboardItemText, () => {
+describe('DashboardItemText component', () => {
   it('dashboard item displays the item map name when type is MAP', () => {
     const { getByTestId } = render(
       <DashboardItemText item={dashboardItems[3]} />
