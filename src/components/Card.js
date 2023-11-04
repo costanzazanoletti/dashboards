@@ -1,54 +1,32 @@
 import { useState, useEffect, useCallback } from 'react';
 import Star from './Star';
 import Toggle from './Toggle';
-import DashboardItem from './DashboardItem';
+import DashboardItemsList from './DashboardItemsList';
 import { getDashboardDetail } from '../api';
 
-const Card = ({ item, expanded, onClick, selectedType }) => {
+const Card = ({ item, expanded, handleClick, selectedType }) => {
   const [dashboardItems, setDashboardItems] = useState([]);
 
-  const updateDetails = useCallback(async () => {
+  const updateDashboardItems = useCallback(async () => {
     const data = await getDashboardDetail(item.id);
-    setDashboardItems(data);
-  }, [item.id]);
-
-  const renderItems = () => {
-    const items = dashboardItems.filter((element) => {
-      return selectedType === '' || selectedType === element.type;
-    });
-    if (items.length > 0)
-      return (
-        <div className="list-group">
-          {items.map((item) => {
-            if (selectedType === '' || selectedType === item.type) {
-              return (
-                <div
-                  className="list-group-item d-flex align-items-center justify-content-between"
-                  key={item.id}
-                >
-                  <DashboardItem item={item} />
-                </div>
-              );
-            } else {
-              return null;
-            }
-          })}
-        </div>
-      );
-    else return <div>No items</div>;
-  };
+    setDashboardItems(
+      data.filter((element) => {
+        return selectedType === '' || selectedType === element.type;
+      })
+    );
+  }, [item.id, selectedType]);
 
   const clickEventHandler = async () => {
     if (!expanded) {
-      onClick();
+      handleClick();
     }
   };
 
   useEffect(() => {
     if (expanded) {
-      updateDetails();
+      updateDashboardItems();
     }
-  }, [expanded, updateDetails]);
+  }, [expanded, updateDashboardItems]);
 
   return (
     <div className="card shadow" onClick={clickEventHandler}>
@@ -60,7 +38,7 @@ const Card = ({ item, expanded, onClick, selectedType }) => {
             <Toggle expanded={expanded} />
           </div>
         </div>
-        {expanded && renderItems()}
+        {expanded && <DashboardItemsList items={dashboardItems} />}
       </div>
     </div>
   );

@@ -1,14 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Card from './Card';
+import { getDashboardList } from '../api';
 
-const CardList = ({ items, selectedType }) => {
+const CardList = ({ selectedType }) => {
+  const [items, setItems] = useState([]);
   const [expandedIndex, setExpandedIndex] = useState(0);
 
-  if (items.length === 0) {
-    return <div className="alert alert-info">No dahboards</div>;
-  }
+  const updateDashboardList = useCallback(async () => {
+    const data = await getDashboardList();
+    setItems(data);
+  }, []);
 
-  return (
+  useEffect(() => {
+    updateDashboardList();
+  }, [updateDashboardList]);
+
+  return items.length === 0 ? (
+    <div className="alert alert-info">No dahboards</div>
+  ) : (
     <ul className="list-unstyled">
       {items.map((item, index) => {
         return (
@@ -17,7 +26,7 @@ const CardList = ({ items, selectedType }) => {
               item={item}
               expanded={index === expandedIndex}
               selectedType={selectedType}
-              onClick={() => {
+              handleClick={() => {
                 setExpandedIndex(index);
               }}
             />

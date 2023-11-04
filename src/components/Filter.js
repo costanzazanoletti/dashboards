@@ -1,9 +1,12 @@
 import { useState } from 'react';
-const Filter = ({ onChange }) => {
+
+const Filter = ({ handleChange }) => {
   const [optionsState, setOptionsState] = useState('');
-  const changeEventHandler = (newValue) => {
+
+  const changeEventHandler = (e) => {
+    const newValue = e.target.value;
     setOptionsState(newValue);
-    onChange(newValue);
+    handleChange(newValue);
   };
 
   return (
@@ -11,9 +14,7 @@ const Filter = ({ onChange }) => {
       <div className="input-group-text">Filter items</div>
       <select
         className="form-select"
-        onChange={(e) => {
-          changeEventHandler(e.target.value);
-        }}
+        onChange={changeEventHandler}
         value={optionsState}
       >
         <option value="">All types</option>
