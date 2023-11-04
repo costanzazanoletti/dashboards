@@ -1,21 +1,18 @@
-import { useState } from 'react';
+import { useContext } from 'react';
+import { TypeContext } from '../App';
 
-const Filter = ({ handleChange }) => {
-  const [optionsState, setOptionsState] = useState('');
-
-  const changeEventHandler = (e) => {
-    const newValue = e.target.value;
-    setOptionsState(newValue);
-    handleChange(newValue);
-  };
+const Filter = () => {
+  const type = useContext(TypeContext);
 
   return (
     <div className="input-group">
       <div className="input-group-text">Filter items</div>
       <select
         className="form-select"
-        onChange={changeEventHandler}
-        value={optionsState}
+        onChange={(e) => {
+          type.setSelectedType(e.target.value);
+        }}
+        value={type.selectedType}
       >
         <option value="">All types</option>
         <option value="VISUALIZATION">VISUALIZATION</option>

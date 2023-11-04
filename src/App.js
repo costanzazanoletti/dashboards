@@ -1,12 +1,13 @@
+import React from 'react';
 import { useState } from 'react';
 import CardList from './components/CardList';
 import Filter from './components/Filter';
 
+export const TypeContext = React.createContext();
+
 const App = () => {
   const [selectedType, setSelectedType] = useState('');
-  const handleChange = (selected) => {
-    setSelectedType(selected);
-  };
+
   return (
     <div className="container">
       <header className="row align-items-center">
@@ -14,7 +15,9 @@ const App = () => {
           <div className="fs-2">Dashboards</div>
         </div>
         <div className="col-12 col-sm-6 col-md-4">
-          <Filter handleChange={handleChange} />
+          <TypeContext.Provider value={{ selectedType, setSelectedType }}>
+            <Filter />
+          </TypeContext.Provider>
         </div>
         <hr />
       </header>
