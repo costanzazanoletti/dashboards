@@ -17,9 +17,7 @@ const Dashboard = ({ item, expanded, handleClick, selectedType }) => {
   }, [item.id, selectedType]);
 
   const clickEventHandler = async () => {
-    if (!expanded) {
-      handleClick();
-    }
+    !expanded && handleClick();
   };
 
   useEffect(() => {

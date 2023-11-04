@@ -10,20 +10,19 @@ const DashboardItemIcon = ({ type }) => {
   const getIcon = () => {
     switch (type) {
       case 'TEXT':
-        return <FaRegFileAlt />;
-        break;
+        return <FaRegFileAlt title="icon-text" />;
+
       case 'VISUALIZATION':
-        return <FaRegChartBar />;
-        break;
+        return <FaRegChartBar title="icon-chart" />;
+
       case 'MAP':
-        return <FaRegMap />;
-        break;
+        return <FaRegMap title="icon-map" />;
+
       case 'MESSAGES':
-        return <FaRegEnvelope />;
-        break;
+        return <FaRegEnvelope title="icon-message" />;
+
       default:
-        return <FaRegCircle />;
-        break;
+        return <FaRegCircle title="icon-default" />;
     }
   };
   return getIcon();

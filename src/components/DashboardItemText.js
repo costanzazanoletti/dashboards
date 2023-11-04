@@ -3,21 +3,20 @@ const DashboardItemText = ({ item }) => {
     switch (item.type) {
       case 'TEXT':
         return item.text;
-        break;
+
       case 'VISUALIZATION':
         return item.visualization.name;
-        break;
+
       case 'MAP':
         return item.map.name;
-        break;
+
       case 'MESSAGES':
         return 'Messages';
-        break;
+
       default:
         return 'unknown';
-        break;
     }
   };
-  return <>{getItemName()}</>;
+  return <span data-testid="item-text">{getItemName()}</span>;
 };
 export default DashboardItemText;

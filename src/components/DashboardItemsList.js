@@ -16,7 +16,7 @@ const DashboardItemsList = ({ items }) => {
         })}
       </div>
     );
-  else return <div>No items</div>;
+  else return <div className="alert alert-info">No items</div>;
 };
 
 export default DashboardItemsList;

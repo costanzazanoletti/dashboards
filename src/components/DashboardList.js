@@ -7,8 +7,7 @@ const DashboardList = ({ selectedType }) => {
   const [expandedIndex, setExpandedIndex] = useState(0);
 
   const updateDashboardList = useCallback(async () => {
-    const data = await getDashboardList();
-    setItems(data);
+    setItems(await getDashboardList());
   }, []);
 
   useEffect(() => {

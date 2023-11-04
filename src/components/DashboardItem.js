@@ -1,4 +1,4 @@
-import DashboardItemText from './DasboardItemText';
+import DashboardItemText from './DashboardItemText';
 import DashboardItemIcon from './DashboardItemIcon';
 
 const DashboardItem = ({ item }) => {
