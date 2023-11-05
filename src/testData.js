@@ -59,9 +59,4 @@ module.exports = {
       w: 24,
     },
   ],
-  dashboard: {
-    displayName: 'Cases Malaria',
-    id: 'JW7RlN5xafN',
-    starred: false,
-  },
 };

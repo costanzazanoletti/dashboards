@@ -1,37 +1,37 @@
-import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import userEvent from '@testing-library/user-event';
 import Filter from './Filter';
 import { TypeContext } from '../App';
 
-describe('Filter component', () => {
-  it('type filter selected option is empty', () => {
-    const { container } = render(
-      <TypeContext.Provider value={''}>
-        <Filter />
-      </TypeContext.Provider>
-    );
-    const select = container.querySelector('select');
-    expect(select.value).toBe('');
-  });
+describe('Filter Component', () => {
+  it('displays the select element with options and selects the correct value', () => {
+    const selectedType = 'MAP';
 
-  it('type filter selected option is MAP', () => {
-    let result = '';
-
-    const props = {
-      selectedType: '',
-      setSelectedType: (type) => {
-        result = type;
-      },
+    // Mock the context value
+    const contextValue = {
+      selectedType,
+      setSelectedType: jest.fn(),
     };
-    render(
-      <TypeContext.Provider value={props}>
+
+    // Render the component within the context provider
+    const { getByTestId, getByDisplayValue } = render(
+      <TypeContext.Provider value={contextValue}>
         <Filter />
       </TypeContext.Provider>
     );
-    const filter = screen.getByTestId('type-filter');
 
-    userEvent.selectOptions(filter, 'MAP');
-    expect(result).toBe('MAP');
+    // Verify that the select element is rendered with the correct options
+    expect(getByTestId('type-filter')).toBeInTheDocument();
+    expect(getByDisplayValue(selectedType)).toBeInTheDocument();
+
+    // Simulate changing the select value
+    const newType = 'VISUALIZATION';
+    fireEvent.change(getByTestId('type-filter'), {
+      target: { value: newType },
+    });
+
+    // Verify that the context function is called with the new type
+    expect(contextValue.setSelectedType).toHaveBeenCalledWith(newType);
   });
 });

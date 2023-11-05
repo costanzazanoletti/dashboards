@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Toggle from './Toggle';
 
-describe('Toggle component', () => {
+describe('Toggle Component', () => {
   it('displays the arrow up icon when expanded', () => {
     const { getByTitle } = render(<Toggle expanded={true} />);
     expect(getByTitle('caret-up')).toBeInTheDocument();

@@ -27,7 +27,11 @@ const Dashboard = ({ item, expanded, handleClick, selectedType }) => {
   }, [expanded, updateDashboardItems]);
 
   return (
-    <div className="card shadow" onClick={clickEventHandler}>
+    <div
+      className="card shadow"
+      data-testid="dashboard-card"
+      onClick={clickEventHandler}
+    >
       <div className="card-body">
         <div className="card-title d-flex align-items-center justify-content-between">
           <h5>{item.displayName}</h5>

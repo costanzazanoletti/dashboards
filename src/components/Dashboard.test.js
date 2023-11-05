@@ -1,122 +1,122 @@
-import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { render, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Dashboard from './Dashboard';
-const { dashboard } = require('../testData');
 
-jest.mock('../api', () => ({
-  getDashboardDetail: jest.fn(() =>
-    Promise.resolve([
-      {
-        users: [],
-        messages: true,
-        shape: 'NORMAL',
-        x: 0,
-        y: 0,
-        type: 'MESSAGES',
-        id: 'w0NbkJBeGLP',
-        reports: [],
-        resources: [],
-        h: 20,
-        w: 29,
-      },
-      {
-        visualization: {
-          type: 'COLUMN',
-          id: 'hlzEdAWPd4L',
-          name: 'Reporting rates: Morbidity by orgunit last year',
-        },
-        users: [],
-        shape: 'NORMAL',
-        x: 29,
-        y: 0,
-        type: 'VISUALIZATION',
-        id: 'elpvfPYiyA0',
-        reports: [],
-        resources: [],
-        h: 20,
-        w: 29,
-      },
-      {
-        text: '*ANC Overview*\n\nThe ANC dashboard provides a _comprehensive_ overview of ANC activity.\n\nClick on the *arrow* next to each item to explore the data further.\n\nYou can switch between visualization types by clicking on the table/chart/map icons for each item.',
-        users: [],
-        x: 0,
-        y: 0,
-        type: 'TEXT',
-        id: 'ILRTXgXvurM',
-        reports: [],
-        resources: [],
-        h: 20,
-        w: 9,
-      },
+// Mock the API function
+import { getDashboardDetail } from '../api';
+
+jest.mock('../api');
+
+describe('Dashboard Component', () => {
+  const mockItem = {
+    displayName: 'Cases Malaria',
+    id: 'JW7RlN5xafN',
+    starred: false,
+  };
+
+  it('renders correctly when not expanded', () => {
+    const { getByText } = render(
+      <Dashboard
+        item={mockItem}
+        expanded={false}
+        handleClick={() => {}}
+        selectedType=""
+      />
+    );
+
+    expect(getByText(mockItem.displayName)).toBeInTheDocument();
+  });
+
+  it('renders correctly when expanded', async () => {
+    const mockData = [
       {
         map: {
           id: 'ZBjCfSaLSqD',
-          name: 'ANC: LLITN coverage district and facility',
+          name: 'Mock name',
         },
-        users: [],
-        shape: 'NORMAL',
-        x: 34,
-        y: 0,
-        type: 'MAP',
         id: 'OiyMNoXzSdY',
-        reports: [],
-        resources: [],
-        h: 20,
-        w: 24,
+        type: 'MAP',
       },
-    ])
-  ),
-}));
+      {
+        text: 'Mock text',
+        type: 'TEXT',
+        id: 'ILRTXgXvurM',
+      },
+    ];
 
-describe('Dashboard component', () => {
-  it('Dashboard displays name', () => {
-    const { container } = render(
+    getDashboardDetail.mockResolvedValue(mockData);
+
+    const { getByText, getByTestId } = render(
       <Dashboard
-        item={dashboard}
-        expanded={false}
-        selectedType={''}
+        item={mockItem}
+        expanded={true}
         handleClick={() => {}}
-      ></Dashboard>
+        selectedType=""
+      />
     );
-    expect(container.querySelector('h5').textContent).toBe('Cases Malaria');
+
+    expect(getByText(mockItem.displayName)).toBeInTheDocument();
+
+    // Simulate an API request and wait for it to resolve
+    await act(async () => {
+      fireEvent.click(getByTestId('dashboard-card'));
+    });
+
+    expect(getByText('Mock name')).toBeInTheDocument();
+    expect(getByText('Mock text')).toBeInTheDocument();
   });
 
-  it('Dashboard is collapsed', () => {
-    const { container } = render(
+  it('calls handleClick when card is clicked', () => {
+    const handleClick = jest.fn();
+    const { getByTestId } = render(
       <Dashboard
-        item={dashboard}
+        item={mockItem}
         expanded={false}
-        selectedType={''}
-        handleClick={() => {}}
-      ></Dashboard>
+        handleClick={handleClick}
+        selectedType=""
+      />
     );
-    expect(container.getElementsByClassName('list-group-item').length).toBe(0);
+
+    fireEvent.click(getByTestId('dashboard-card'));
+
+    expect(handleClick).toHaveBeenCalled();
   });
 
-  //   it('Dashboard has 4 dashboard items', () => {
-  //     const { container } = render(
-  //       <Dashboard
-  //         item={dashboard}
-  //         expanded={true}
-  //         selectedType={''}
-  //         handleClick={() => {}}
-  //       ></Dashboard>
-  //     );
+  it('filters dashboard items by selected type', async () => {
+    const mockData = [
+      {
+        map: {
+          id: 'ZBjCfSaLSqD',
+          name: 'Mock map',
+        },
+        id: 'OiyMNoXzSdY',
+        type: 'MAP',
+      },
+      {
+        text: 'Mock text',
+        type: 'TEXT',
+        id: 'ILRTXgXvurM',
+      },
+    ];
 
-  //     expect(container.getElementsByClassName('list-group-item').length).toBe(4);
-  //   });
+    getDashboardDetail.mockResolvedValue(mockData);
 
-  // it('Dashboard displays filtered dashboard items', () => {
-  //   jest.mock('../api', async () => mockDashboardItems);
-  //   const { container } = render(
-  //     <Dashboard
-  //       item={dashboard}
-  //       expanded={true}
-  //       selectedType={'MAP'}
-  //       handleClick={() => {}}
-  //     ></Dashboard>
-  //   );
+    const { getByText, getByTestId, queryByText } = render(
+      <Dashboard
+        item={mockItem}
+        expanded={true}
+        handleClick={() => {}}
+        selectedType="MAP"
+      />
+    );
 
-  //   expect(container.getElementsByClassName('card').length).toBe(1);
-  // });
+    // Simulate an API request and wait for it to resolve
+    await act(async () => {
+      fireEvent.click(getByTestId('dashboard-card'));
+    });
+
+    expect(getByText('Mock map')).toBeInTheDocument();
+    expect(queryByText('Mock text')).toBeNull();
+  });
 });
