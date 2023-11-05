@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import Star from './Star';
+import StarToggle from './StarToggle';
 import Toggle from './Toggle';
 import DashboardItemsList from './DashboardItemsList';
 import { getDashboardDetail } from '../api';
@@ -36,7 +36,7 @@ const Dashboard = ({ item, expanded, handleClick, selectedType }) => {
         <div className="card-title d-flex align-items-center justify-content-between">
           <h5>{item.displayName}</h5>
           <div>
-            <Star full={item.starred} />
+            <StarToggle id={item.id} />
             <Toggle expanded={expanded} />
           </div>
         </div>
