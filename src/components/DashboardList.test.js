@@ -8,7 +8,7 @@ import { getDashboardList, getDashboardDetail } from '../api';
 jest.mock('../api');
 
 describe('DashboardList Component', () => {
-  it('displays a list of dashboards with data', async () => {
+  it('displays a list of dashboards with the first expanded', async () => {
     const mockData = [
       {
         displayName: 'Antenatal Care',
@@ -47,9 +47,12 @@ describe('DashboardList Component', () => {
     await act(async () => {
       // Wait for the data to be loaded
     });
-
+    // Dashboard names
     expect(getByText('Antenatal Care')).toBeInTheDocument();
     expect(getByText('Cases Malaria')).toBeInTheDocument();
+    // First dashboard items names
+    expect(getByText('Mock name')).toBeInTheDocument();
+    expect(getByText('Mock text')).toBeInTheDocument();
   });
 
   it('renders a "No dashboards" message when there is no data', async () => {
