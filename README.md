@@ -1,70 +1,29 @@
-# Getting Started with Create React App
+# DHIS2 Frontend Task - Option 2
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Build a React application that fetches and renders the list of dashboards available to a DHIS2 user.
 
-## Available Scripts
+### The API
 
-In the project directory, you can run:
+To get the list of dashboards, call:
+https://gist.githubusercontent.com/kabaros/da79636249e10a7c991a4638205b1726/raw/fa044f54e7a5493b06bb51da40ecc3a9cb4cd3a5/dashboards.json
 
-### `npm start`
+To get a specific dashboard’s details, call
+https://gist.githubusercontent.com/kabaros/da79636249e10a7c991a4638205b1726/raw/fa044f54e7a5493b06bb51da40ecc3a9cb4cd3a5/{id}.json - replacing {id} with the dashboard id from the list of dashboards.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### The specs
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. Show the dashboards in a list of collapsible cards
 
-### `npm test`
+- The first dashboard card is expanded on load by default
+- When the user clicks on another dashboard, expand that dashboard card to show its details and collapse the other dashboards
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. When a dashboard is expanded, then show all the dashboard items in that dashboard
 
-### `npm run build`
+- Show an icon based on the item type (visualization, map, text, etc.)
+- Show the dashboard item name (For text types, show the text of the dashboard item in place of its name)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. Ability to “star” a dashboard and persist the starred states on reload.
+4. Ability to filter dashboard items of a certain type, so if the user selects “visualization”, only the visualization dashboard items are displayed.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Keep the filter selected when the user expands and collapses dashboard cards
+- Some dashboard items (like visualization and map) are expensive to render, so make sure there are no unnecessary re-renders
