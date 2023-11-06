@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Dashboard from './Dashboard';
 import { getDashboardList } from '../api';
 
-const DashboardList = ({ selectedType }) => {
+const DashboardList = () => {
   const [items, setItems] = useState([]);
   const [expandedIndex, setExpandedIndex] = useState(0);
 
@@ -24,7 +24,6 @@ const DashboardList = ({ selectedType }) => {
             <Dashboard
               item={item}
               expanded={index === expandedIndex}
-              selectedType={selectedType}
               handleClick={() => {
                 setExpandedIndex(index);
               }}

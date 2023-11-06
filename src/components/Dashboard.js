@@ -1,20 +1,22 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useContext } from 'react';
 import StarToggle from './StarToggle';
 import Toggle from './Toggle';
 import DashboardItemsList from './DashboardItemsList';
 import { getDashboardDetail } from '../api';
+import { TypeContext } from '../App';
 
-const Dashboard = ({ item, expanded, handleClick, selectedType }) => {
+const Dashboard = ({ item, expanded, handleClick }) => {
   const [dashboardItems, setDashboardItems] = useState([]);
+  const type = useContext(TypeContext);
 
   const updateDashboardItems = useCallback(async () => {
     const data = await getDashboardDetail(item.id);
     setDashboardItems(
       data.filter((element) => {
-        return selectedType === '' || selectedType === element.type;
+        return type.selectedType === '' || type.selectedType === element.type;
       })
     );
-  }, [item.id, selectedType]);
+  }, [item.id, type.selectedType]);
 
   const clickEventHandler = async () => {
     !expanded && handleClick();

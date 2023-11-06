@@ -2,10 +2,10 @@ import React from 'react';
 import { render, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Dashboard from './Dashboard';
+import { TypeContext } from '../App';
 
 // Mock the API function
 import { getDashboardDetail } from '../api';
-
 jest.mock('../api');
 
 describe('Dashboard Component', () => {
@@ -17,12 +17,9 @@ describe('Dashboard Component', () => {
 
   it('renders correctly when not expanded', () => {
     const { getByText } = render(
-      <Dashboard
-        item={mockItem}
-        expanded={false}
-        handleClick={() => {}}
-        selectedType=""
-      />
+      <TypeContext.Provider value={{ selectedType: '' }}>
+        <Dashboard item={mockItem} expanded={false} handleClick={() => {}} />
+      </TypeContext.Provider>
     );
 
     expect(getByText(mockItem.displayName)).toBeInTheDocument();
@@ -48,12 +45,9 @@ describe('Dashboard Component', () => {
     getDashboardDetail.mockResolvedValue(mockData);
 
     const { getByText, getByTestId } = render(
-      <Dashboard
-        item={mockItem}
-        expanded={true}
-        handleClick={() => {}}
-        selectedType=""
-      />
+      <TypeContext.Provider value={{ selectedType: '' }}>
+        <Dashboard item={mockItem} expanded={true} handleClick={() => {}} />
+      </TypeContext.Provider>
     );
 
     expect(getByText(mockItem.displayName)).toBeInTheDocument();
@@ -70,12 +64,9 @@ describe('Dashboard Component', () => {
   it('calls handleClick when card is clicked', () => {
     const handleClick = jest.fn();
     const { getByTestId } = render(
-      <Dashboard
-        item={mockItem}
-        expanded={false}
-        handleClick={handleClick}
-        selectedType=""
-      />
+      <TypeContext.Provider value={{ selectedType: '' }}>
+        <Dashboard item={mockItem} expanded={false} handleClick={handleClick} />
+      </TypeContext.Provider>
     );
 
     fireEvent.click(getByTestId('dashboard-card'));
@@ -103,12 +94,9 @@ describe('Dashboard Component', () => {
     getDashboardDetail.mockResolvedValue(mockData);
 
     const { getByText, getByTestId, queryByText } = render(
-      <Dashboard
-        item={mockItem}
-        expanded={true}
-        handleClick={() => {}}
-        selectedType="MAP"
-      />
+      <TypeContext.Provider value={{ selectedType: 'MAP' }}>
+        <Dashboard item={mockItem} expanded={true} handleClick={() => {}} />
+      </TypeContext.Provider>
     );
 
     // Simulate an API request and wait for it to resolve

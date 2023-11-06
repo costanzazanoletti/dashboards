@@ -3,7 +3,7 @@ import { render, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import DashboardList from './DashboardList';
 import { getDashboardList, getDashboardDetail } from '../api';
-
+import { TypeContext } from '../App';
 // Mock the API function
 jest.mock('../api');
 
@@ -42,7 +42,11 @@ describe('DashboardList Component', () => {
     getDashboardList.mockResolvedValue(mockData);
     getDashboardDetail.mockResolvedValue(mockItemsData);
 
-    const { getByText } = render(<DashboardList selectedType="" />);
+    const { getByText } = render(
+      <TypeContext.Provider value={{ selectedType: '' }}>
+        <DashboardList />
+      </TypeContext.Provider>
+    );
 
     await act(async () => {
       // Wait for the data to be loaded
@@ -58,7 +62,11 @@ describe('DashboardList Component', () => {
   it('renders a "No dashboards" message when there is no data', async () => {
     getDashboardList.mockResolvedValue([]);
 
-    const { getByText } = render(<DashboardList selectedType="" />);
+    const { getByText } = render(
+      <TypeContext.Provider value={{ selectedType: '' }}>
+        <DashboardList />
+      </TypeContext.Provider>
+    );
 
     await act(async () => {
       // Wait for the data to be loaded
