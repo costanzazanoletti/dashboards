@@ -7,16 +7,19 @@ import { TypeContext } from '../App';
 
 const Dashboard = ({ item, expanded, handleClick }) => {
   const [dashboardItems, setDashboardItems] = useState([]);
+  const [filteredDashboardItems, setFilteredDashboardItems] = useState([]);
   const type = useContext(TypeContext);
 
   const updateDashboardItems = useCallback(async () => {
     const data = await getDashboardDetail(item.id);
-    setDashboardItems(
-      data.filter((element) => {
-        return type.selectedType === '' || type.selectedType === element.type;
-      })
-    );
-  }, [item.id, type.selectedType]);
+    setDashboardItems(data);
+  }, [item.id]);
+
+  const filterDashboardItems = useCallback(() => {
+    return dashboardItems.filter((element) => {
+      return type.selectedType === '' || type.selectedType === element.type;
+    });
+  }, [dashboardItems, type.selectedType]);
 
   const clickEventHandler = async () => {
     !expanded && handleClick();
@@ -27,6 +30,10 @@ const Dashboard = ({ item, expanded, handleClick }) => {
       updateDashboardItems();
     }
   }, [expanded, updateDashboardItems]);
+
+  useEffect(() => {
+    setFilteredDashboardItems(filterDashboardItems());
+  }, [type.selectedType, filterDashboardItems, dashboardItems]);
 
   return (
     <div
@@ -42,7 +49,7 @@ const Dashboard = ({ item, expanded, handleClick }) => {
             <Toggle expanded={expanded} />
           </div>
         </div>
-        {expanded && <DashboardItemList items={dashboardItems} />}
+        {expanded && <DashboardItemList items={filteredDashboardItems} />}
       </div>
     </div>
   );

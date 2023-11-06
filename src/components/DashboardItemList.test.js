@@ -62,15 +62,15 @@ const mockData = [
     w: 24,
   },
 ];
-describe('DashboardItemsList Component', () => {
+describe('DashboardItemList Component', () => {
   it('displays 4 div with class list-group-item', () => {
-    const { container } = render(<DashboardItemsList items={mockData} />);
+    const { container } = render(<DashboardItemList items={mockData} />);
     const divs = container.getElementsByClassName('list-group-item');
     expect(divs.length).toBe(4);
   });
 
   it('displays the empty message when there are no items', () => {
-    const { container } = render(<DashboardItemsList items={[]} />);
+    const { container } = render(<DashboardItemList items={[]} />);
     const divs = container.getElementsByClassName('alert alert-info');
     expect(divs.length).toBe(1);
   });

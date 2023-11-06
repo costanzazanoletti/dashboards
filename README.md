@@ -1,6 +1,6 @@
-## Deployed app: https://voluble-treacle-da7456.netlify.app/
+### Deployed app link: https://voluble-treacle-da7456.netlify.app/
 
-## Components structure
+### Design choices
 
 I broke down the requested features into small single purpose components, in order to make them easier to test and mantain.
 
