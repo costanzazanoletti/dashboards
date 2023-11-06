@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useContext } from 'react';
 import StarToggle from './StarToggle';
 import Toggle from './Toggle';
-import DashboardItemsList from './DashboardItemsList';
+import DashboardItemList from './DashboardItemList';
 import { getDashboardDetail } from '../api';
 import { TypeContext } from '../App';
 
@@ -42,7 +42,7 @@ const Dashboard = ({ item, expanded, handleClick }) => {
             <Toggle expanded={expanded} />
           </div>
         </div>
-        {expanded && <DashboardItemsList items={dashboardItems} />}
+        {expanded && <DashboardItemList items={dashboardItems} />}
       </div>
     </div>
   );

@@ -1,29 +1,11 @@
-# DHIS2 Frontend Task - Option 2
+## Deployed app: https://voluble-treacle-da7456.netlify.app/
 
-## Build a React application that fetches and renders the list of dashboards available to a DHIS2 user.
+## Components structure
 
-### The API
+I broke down the requested features into small single purpose components, in order to make them easier to test and mantain.
 
-To get the list of dashboards, call:
-https://gist.githubusercontent.com/kabaros/da79636249e10a7c991a4638205b1726/raw/fa044f54e7a5493b06bb51da40ecc3a9cb4cd3a5/dashboards.json
+I used React Context to share the value of the selected dashboard items type, which is modified inside the Filter component and is used to filter the items inside the Dashboard component. The Context is created in the App component, which is the common ancestor of both components.
 
-To get a specific dashboard’s details, call
-https://gist.githubusercontent.com/kabaros/da79636249e10a7c991a4638205b1726/raw/fa044f54e7a5493b06bb51da40ecc3a9cb4cd3a5/{id}.json - replacing {id} with the dashboard id from the list of dashboards.
+To store the starred states of the dashboard on reload I used localStorage, managed directly inside the StarToggle component, in order to avoid an unnecessary re-render of the parent component. The id of the dashboard is used as key in the localStorage map.
 
-### The specs
-
-1. Show the dashboards in a list of collapsible cards
-
-- The first dashboard card is expanded on load by default
-- When the user clicks on another dashboard, expand that dashboard card to show its details and collapse the other dashboards
-
-2. When a dashboard is expanded, then show all the dashboard items in that dashboard
-
-- Show an icon based on the item type (visualization, map, text, etc.)
-- Show the dashboard item name (For text types, show the text of the dashboard item in place of its name)
-
-3. Ability to “star” a dashboard and persist the starred states on reload.
-4. Ability to filter dashboard items of a certain type, so if the user selects “visualization”, only the visualization dashboard items are displayed.
-
-- Keep the filter selected when the user expands and collapses dashboard cards
-- Some dashboard items (like visualization and map) are expensive to render, so make sure there are no unnecessary re-renders
+I used Jest as testing tool. Each component has its own test file. When needed by the component I mocked the functions which perform api calls, the localStorage setItem and getItem functions and the context value.

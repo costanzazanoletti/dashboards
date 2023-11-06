@@ -21,8 +21,8 @@ const App = () => {
         </div>
         <hr />
       </header>
-      <TypeContext.Provider value={{ selectedType, setSelectedType }}>
-        <DashboardList selectedType={selectedType} />
+      <TypeContext.Provider value={{ selectedType }}>
+        <DashboardList />
       </TypeContext.Provider>
     </div>
   );

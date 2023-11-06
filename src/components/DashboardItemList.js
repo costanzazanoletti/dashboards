@@ -1,6 +1,6 @@
 import DashboardItem from './DashboardItem';
 
-const DashboardItemsList = ({ items }) => {
+const DashboardItemList = ({ items }) => {
   if (items.length > 0)
     return (
       <div className="list-group">
@@ -19,4 +19,4 @@ const DashboardItemsList = ({ items }) => {
   else return <div className="alert alert-info">No items</div>;
 };
 
-export default DashboardItemsList;
+export default DashboardItemList;
